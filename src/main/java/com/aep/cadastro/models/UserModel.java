@@ -12,4 +12,5 @@ public class UserModel {
     private String nome;
     private Integer idade;
     private String vaga;
+    private String observacao;
 }
