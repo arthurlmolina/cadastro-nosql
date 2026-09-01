@@ -224,7 +224,7 @@ public class CadastroApplication {
 		int valor = scanner.nextInt();
 		scanner.nextLine();
 		return valor;
-	}2
+	}
 
 	private static Integer lerIdade() {
 		while (!scanner.hasNextInt()) {
