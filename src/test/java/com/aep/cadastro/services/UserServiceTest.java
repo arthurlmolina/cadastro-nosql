@@ -3,14 +3,12 @@ package com.aep.cadastro.services;
 import com.aep.cadastro.CadastroApplication;
 import com.aep.cadastro.models.UserModel;
 import com.aep.cadastro.repositories.UserRepository;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-
 import java.util.List;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -55,5 +53,60 @@ class UserServiceTest {
 
         assertEquals(1, usuarios.size());
         assertEquals("Maria", usuarios.get(0).getNome());
+    }
+
+    @Test
+    void deveBuscarUsuarioPorId() {
+    UserModel user = new UserModel();
+    user.setNome("Carlos");
+    user.setIdade(25);
+    user.setVaga("Analista");
+
+    UserModel salvo = userService.createUser(user);
+
+    Optional<UserModel> resultado = userService.findById(salvo.getId());
+
+    assertTrue(resultado.isPresent());
+    assertEquals("Carlos", resultado.get().getNome());
+    assertEquals(25, resultado.get().getIdade());
+}
+
+    @Test
+    void deveAtualizarUsuario() {
+    UserModel user = new UserModel();
+    user.setNome("Ana");
+    user.setIdade(22);
+    user.setVaga("Estagiária");
+
+    UserModel salvo = userService.createUser(user);
+
+    UserModel dadosAtualizados = new UserModel();
+    dadosAtualizados.setNome("Ana Souza");
+    dadosAtualizados.setIdade(23);
+    dadosAtualizados.setVaga("Desenvolvedora");
+    dadosAtualizados.setObservacao("Promovida");
+
+    UserModel resultado =
+            userService.updateUser(dadosAtualizados, salvo.getId());
+
+    assertEquals("Ana Souza", resultado.getNome());
+    assertEquals(23, resultado.getIdade());
+    assertEquals("Desenvolvedora", resultado.getVaga());
+    assertEquals("Promovida", resultado.getObservacao());
+    }
+
+    @Test
+    void deveDeletarUsuario() {
+    UserModel user = new UserModel();
+    user.setNome("Pedro");
+    user.setIdade(30);
+
+    UserModel salvo = userService.createUser(user);
+
+    userService.deleteUser(salvo.getId());
+
+    Optional<UserModel> resultado = userService.findById(salvo.getId());
+
+    assertTrue(resultado.isEmpty());
     }
 }
