@@ -28,12 +28,15 @@ class UserServiceTest {
         userRepository.deleteAll();
     }
 
+
+    // Teste de funcionamento do CRUD
     @Test
     void deveCriarUsuario() {
         UserModel user = new UserModel();
         user.setNome("João");
         user.setIdade(20);
         user.setVaga("Desenvolvedor");
+        user.setObservacao("Candidato disponível");
 
         UserModel resultado = userService.createUser(user);
 
@@ -48,6 +51,9 @@ class UserServiceTest {
         UserModel user = new UserModel();
         user.setNome("Maria");
         user.setIdade(22);
+        user.setVaga("Desenvolvedora");
+        user.setVaga("Desenvolvedor");
+        user.setObservacao("Candidato disponível");
 
         userService.createUser(user);
 
@@ -63,6 +69,8 @@ class UserServiceTest {
     user.setNome("Carlos");
     user.setIdade(25);
     user.setVaga("Analista");
+    user.setVaga("Desenvolvedor");
+        user.setObservacao("Candidato disponível");
 
     UserModel salvo = userService.createUser(user);
 
@@ -79,6 +87,7 @@ class UserServiceTest {
     user.setNome("Ana");
     user.setIdade(22);
     user.setVaga("Estagiária");
+    user.setObservacao("Candidato disponível");
 
     UserModel salvo = userService.createUser(user);
 
@@ -102,6 +111,8 @@ class UserServiceTest {
     UserModel user = new UserModel();
     user.setNome("Pedro");
     user.setIdade(30);
+    user.setVaga("Desenvolvedor");
+    user.setObservacao("Candidato disponível");
 
     UserModel salvo = userService.createUser(user);
 
@@ -112,11 +123,14 @@ class UserServiceTest {
     assertTrue(resultado.isEmpty());
     }
 
+    // testes de criação de usuario
     @Test
     void naoDeveCriarUsuarioSemNome() {
     UserModel user = new UserModel();
     user.setNome("");
     user.setIdade(20);
+    user.setVaga("Desenvolvedor");
+    user.setObservacao("Candidato disponível");
 
     assertThrows(
         IllegalArgumentException.class,
@@ -129,6 +143,8 @@ class UserServiceTest {
     UserModel user = new UserModel();
     user.setNome("João");
     user.setIdade(0);
+    user.setVaga("Desenvolvedor");
+    user.setObservacao("Candidato disponível");
 
     assertThrows(
         IllegalArgumentException.class,
@@ -136,5 +152,21 @@ class UserServiceTest {
 
     }   
    
+    @Test
+    void naoDeveCriarUsuarioSemVaga() {
+        UserModel user = new UserModel();
+        user.setNome("Santo");
+        user.setIdade(20);
+        user.setVaga("");
+        user.setObservacao("Candidato disponível");
+    }
 
+    @Test 
+    void naoDeveCriarUsuarioSemDescricao() {
+        UserModel user = new UserModel();
+        user.setNome("Rafael");
+        user.setIdade(25);
+        user.setVaga("Desenvolvedor");
+        user.setObservacao("");
+    }
 }
