@@ -3,6 +3,8 @@ package com.aep.cadastro.services;
 import com.aep.cadastro.CadastroApplication;
 import com.aep.cadastro.models.UserModel;
 import com.aep.cadastro.repositories.UserRepository;
+
+import org.apache.catalina.User;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -109,4 +111,30 @@ class UserServiceTest {
 
     assertTrue(resultado.isEmpty());
     }
+
+    @Test
+    void naoDeveCriarUsuarioSemNome() {
+    UserModel user = new UserModel();
+    user.setNome("");
+    user.setIdade(20);
+
+    assertThrows(
+        IllegalArgumentException.class,
+        () -> userService.createUser(user));
+
+    }
+
+    @Test
+    void naoDeveCriarUsuarioComIdadeZero( ) {
+    UserModel user = new UserModel();
+    user.setNome("João");
+    user.setIdade(0);
+
+    assertThrows(
+        IllegalArgumentException.class,
+        () -> userService.createUser(user));
+
+    }   
+   
+
 }
