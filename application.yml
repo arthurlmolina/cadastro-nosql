@@ -1,0 +1,22 @@
+server:
+  error:
+    include-message: always
+spring:
+  data:
+    mongodb:
+      auto-index-creation: true
+      authentication-database: curriculos
+      username: aep
+      password: aep2026
+      database: curriculos
+      port: 27018
+      host: localhost
+logging:
+  level:
+    org:
+      springframework:
+        data:
+          mongodb:
+            core:
+              MongoTemplate: DEBUG
+
