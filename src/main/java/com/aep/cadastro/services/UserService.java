@@ -43,6 +43,18 @@ public class UserService {
     }
 
     public UserModel updateUser(UserModel userModel, String id){
+        if (userModel.getNome().isBlank()) {
+            throw new IllegalArgumentException("Nome é obrigatório");
+        }
+        if (userModel.getIdade() <= 0) {
+            throw new IllegalArgumentException("Idade deve ser maior que zero");
+        }
+        if (userModel.getVaga().isBlank()) {
+            throw new IllegalArgumentException("Vaga é obrigatória");
+        }
+        if (userModel.getObservacao().isBlank()) {
+            throw new IllegalArgumentException("Obsevação é obrigatória");
+        }
         UserModel user = userRepository.findById(id).get();
         BeanUtils.copyProperties(userModel, user);
         return userRepository.save(user);

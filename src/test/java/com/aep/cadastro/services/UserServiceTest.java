@@ -123,7 +123,7 @@ class UserServiceTest {
     assertTrue(resultado.isEmpty());
     }
 
-    // testes de criação de usuario
+    // testes de criação de Users
     @Test
     void naoDeveCriarUsuarioSemNome() {
     UserModel user = new UserModel();
@@ -162,11 +162,97 @@ class UserServiceTest {
     }
 
     @Test 
-    void naoDeveCriarUsuarioSemDescricao() {
+    void naoDeveCriarUsuarioSemObservacao() {
         UserModel user = new UserModel();
         user.setNome("Rafael");
         user.setIdade(25);
         user.setVaga("Desenvolvedor");
         user.setObservacao("");
+    }
+
+    //testes de Att de Users
+    @Test 
+    void naoDeveAtualizarUsuarioSemNome() {
+        UserModel user = new UserModel();
+        user.setNome("Maria");
+        user.setIdade(22);
+        user.setVaga("Analista");
+        user.setObservacao("Disponível");
+
+        UserModel salvo = userService.createUser(user);
+
+        UserModel atualizado = new UserModel();
+        atualizado.setNome("");
+        atualizado.setIdade(21);
+        atualizado.setVaga("Analista");
+        atualizado.setObservacao("Atualizada");
+
+        assertThrows(
+            IllegalArgumentException.class, () -> userService.updateUser(atualizado, salvo.getId())
+        );
+    }
+
+    @Test
+    void naoDeveAtualizarUsuarioComIdadeInvalida() {
+        UserModel user = new UserModel();
+        user.setNome("Roberto");
+        user.setIdade(20);
+        user.setVaga("Desenvolvedor");
+        user.setObservacao("Dispinível");
+
+        UserModel salvo = userService.createUser(user);
+
+        UserModel atualizado = new UserModel();
+        atualizado.setNome("Roberto");
+        atualizado.setIdade(0);
+        atualizado.setVaga("Analista");
+        atualizado.setObservacao("Atualizado");
+
+        assertThrows(
+            IllegalArgumentException.class,() -> userService.updateUser(atualizado, salvo.getId())
+        );
+    }
+
+    @Test 
+    void naoDeveAtualizarUsuarioSemVaga() {
+        UserModel user = new UserModel();
+        user.setNome("Maria");
+        user.setIdade(20);
+        user.setVaga("Desenvolvedora");
+        user.setObservacao("Diponível");
+
+        UserModel salvo = userService.createUser(user);
+
+        UserModel atualizado = new UserModel();
+        atualizado.setNome("Maria");
+        atualizado.setIdade(20);
+        atualizado.setVaga("");
+        atualizado.setObservacao("Atualizada");
+
+        assertThrows(
+            IllegalArgumentException.class,() -> userService.updateUser(atualizado, salvo.getId())
+        );
+    }
+
+
+    @Test 
+    void naoDeveAtualizarUsuarioSemObservacao() {
+        UserModel user = new UserModel();
+        user.setNome("Maria");
+        user.setIdade(20);
+        user.setVaga("Desenvolvedora");
+        user.setObservacao("Diponível");
+
+        UserModel salvo = userService.createUser(user);
+
+        UserModel atualizado = new UserModel();
+        atualizado.setNome("Maria");
+        atualizado.setIdade(21);
+        atualizado.setVaga("Analista");
+        atualizado.setObservacao("");
+
+        assertThrows(
+            IllegalArgumentException.class,() -> userService.updateUser(atualizado, salvo.getId())
+        );
     }
 }
