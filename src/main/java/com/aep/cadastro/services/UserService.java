@@ -26,6 +26,13 @@ public class UserService {
     }
 
     public UserModel createUser(UserModel user){
+        if (user.getNome() == null) {
+            throw new IllegalArgumentException("Nomé é Obrigatorio");
+        }
+        if (user.getIdade() <= 0) {
+            throw new IllegalArgumentException("Idade deve ser maior que zero");
+        }
+        
         return userRepository.save(user);
     }
 
