@@ -27,15 +27,22 @@ public class UserController {
     }
 
     @GetMapping("/{id}")
-    public Optional<UserModel> findById(@PathVariable String id){
-        return userService.findById(id);
+    public ResponseEntity<UserModel> findById(@PathVariable String id){
+        return userService.findById(id)
+                .map(ResponseEntity::ok)
+                .orElseGet(() -> ResponseEntity.notFound().build());
     }
-
+    
     @PostMapping
     public ResponseEntity<UserModel> createUser(@RequestBody UserModel userModel){
-        UserModel request = userService.createUser(userModel);
-        URI uri = ServletUriComponentsBuilder.fromCurrentRequestUri().path("/{id}").buildAndExpand(userModel.getId()).toUri();
-        return ResponseEntity.created(uri).body(request);
+        UserModel user = userService.createUser(userModel);
+
+        URI uri = ServletUriComponentsBuilder
+                .fromCurrentRequest()
+                .path("/{id}")
+                .buildAndExpand(user.getId())
+                .toUri();
+        return ResponseEntity.created(uri).body(user);
     }
 
     @PutMapping("/{id}")

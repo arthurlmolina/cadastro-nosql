@@ -30,8 +30,9 @@ public class UserService {
     }
 
     public UserModel updateUser(UserModel userModel, String id){
-        UserModel user = userRepository.findById(id).get();
-        BeanUtils.copyProperties(userModel, user);
+        UserModel user = userRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Usuário não encontrado: " + id));
+        BeanUtils.copyProperties(userModel, user, "id");
         return userRepository.save(user);
     }
 
