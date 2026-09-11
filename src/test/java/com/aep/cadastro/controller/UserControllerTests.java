@@ -2,8 +2,10 @@ package com.aep.cadastro.controller;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -31,7 +33,7 @@ public class UserControllerTests {
     }
 
     @Test
-void deveBuscarTodosUsuarios() {
+    void deveBuscarTodosUsuarios() {
 
     UserModel user = new UserModel();
     user.setNome("João");
@@ -48,6 +50,22 @@ void deveBuscarTodosUsuarios() {
     assertNotNull(resposta.getBody());
     assertEquals(1, resposta.getBody().size());
     assertEquals("João", resposta.getBody().get(0).getNome());
-}
+    }
+
+    @Test 
+    void deveBuscarUsuariosPorId() {
+        UserModel user = new UserModel();
+        user.setNome("Carlos");
+        user.setIdade(25);
+        user.setVaga("Analista");
+        user.setObservacao("Dísponivel");
+
+        UserModel salvo = userRepository.save(user);
+
+        Optional<UserModel> resposta = userController.findById(salvo.getId());
+        assertTrue(resposta.isPresent());
+        assertEquals("Carlos", resposta.get().getNome());
+
+    }
 
 }
