@@ -12,9 +12,7 @@ class CadastroApplicationTests {
         String entrada = "0\n";
 
         System.setIn(
-            new ByteArrayInputStream(entrada.getBytes())
-        );
-
+            new ByteArrayInputStream(entrada.getBytes()));
         CadastroApplication.main(new String[]{});
     }
 
@@ -28,6 +26,23 @@ class CadastroApplicationTests {
 		CadastroApplication.main(new String[]{});
 	}
 
-	
+	@Test
+	void deveInformarVagaInvalida() {
+
+		String entrada = "1\n" + "5\n" + "0\n";
+		System.setIn(
+			new ByteArrayInputStream(entrada.getBytes()));
+		CadastroApplication.main(new String[]{});
+	}
+
+	@Test
+	void deveRealizarCandidatura() {
+
+		String entrada =
+				"1\n" + "1\n" + "João\n" +  "20\n" + "Tenho interesse\n" + "0\n";
+		System.setIn(
+			new ByteArrayInputStream(entrada.getBytes()));
+		CadastroApplication.main(new String[]{});
+	}
 
 }
