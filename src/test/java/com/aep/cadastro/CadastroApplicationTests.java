@@ -45,4 +45,15 @@ class CadastroApplicationTests {
 		CadastroApplication.main(new String[]{});
 	}
 
+	@Test
+	void tratarOpcaoNaoNumerica() {
+		String entrada =
+			"abc\n " + "0\n";
+		System.setIn(
+			new ByteArrayInputStream(entrada.getBytes()));
+			CadastroApplication.main(new String[]{});
+	}
+
+	
+
 }
