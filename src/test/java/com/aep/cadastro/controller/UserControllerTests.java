@@ -84,4 +84,31 @@ public class UserControllerTests {
         assertNotNull("Maria", resposta.getBody().getNome());
     }
 
+    @Test 
+    void deveAtualizarUsuario() {
+
+        UserModel user = new UserModel();
+        user.setNome("Pedro");
+        user.setIdade(20);
+        user.setVaga("Estagiário");
+        user.setObservacao("Cadastro Inicial");
+
+        UserModel salvo = userRepository.save(user);
+
+        UserModel atualizado = new UserModel();
+        atualizado.setNome("Pedro Silva");
+        atualizado.setIdade(21);
+        atualizado.setVaga("Desenvolvedor");
+        atualizado.setObservacao("Atualizado");
+
+        UserModel resposta = userController.updateUser(atualizado, salvo.getId());
+
+        assertEquals("Pedro Silva", resposta.getNome());
+        assertEquals(21, resposta.getIdade());
+        assertEquals("Desenvolvedor", resposta.getVaga());
+        assertEquals("Atualizado", resposta.getObservacao());
+    }
+
+    
+
 }
