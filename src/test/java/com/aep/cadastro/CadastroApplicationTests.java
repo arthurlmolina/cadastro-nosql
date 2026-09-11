@@ -54,6 +54,14 @@ class CadastroApplicationTests {
 			CadastroApplication.main(new String[]{});
 	}
 
-	
+	@Test
+	void deveTratarIdadeNaoNumerica() {
+		String entrada =
+				"1\n" + "1\n" + "João\n" + "abc\n" + "20\n" + "Tenho interesse na vaga\n" + "0\n";
+
+		System.setIn(
+			new ByteArrayInputStream(entrada.getBytes()));
+		CadastroApplication.main(new String[]{});
+	}
 
 }
