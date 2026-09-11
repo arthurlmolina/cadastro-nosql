@@ -68,4 +68,20 @@ public class UserControllerTests {
 
     }
 
+    @Test 
+    void deveCriarUsuario() {
+        UserModel user = new UserModel();
+        user.setNome("Maria");
+        user.setIdade(22);
+        user.setVaga("Desenvolvedora");
+        user.setObservacao("Primeiro");
+
+        ResponseEntity<UserModel> resposta = userController.createUser(user);
+    
+        assertEquals(201, resposta.getStatusCode().value());
+        assertNotNull(resposta.getBody());
+        assertNotNull(resposta.getBody().getId());
+        assertNotNull("Maria", resposta.getBody().getNome());
+    }
+
 }
