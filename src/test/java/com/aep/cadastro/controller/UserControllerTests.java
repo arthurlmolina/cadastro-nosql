@@ -1,6 +1,7 @@
 package com.aep.cadastro.controller;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -109,6 +110,20 @@ public class UserControllerTests {
         assertEquals("Atualizado", resposta.getObservacao());
     }
 
-    
+    @Test 
+    void deveDeletarUsuario() {
+        UserModel user = new  UserModel();
+        user.setNome("Ana");
+        user.setIdade(30);
+        user.setVaga("Analista");
+        user.setObservacao("exclusão");
+
+        UserModel salvo = userRepository.save(user);
+
+        ResponseEntity<?> resposta = userController.deleteUser(salvo.getId());
+
+        assertEquals(204, resposta.getStatusCode().value());
+        assertFalse(userRepository.findById(salvo.getId()).isPresent());
+    }
 
 }
