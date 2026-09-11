@@ -17,4 +17,33 @@ class CadastroApplicationTests {
 
         CadastroApplication.main(new String[]{});
     }
+
+	@Test
+	void deveVerVagasEVoltar() {
+
+			String entrada =
+				"1\n" + " 0\n" + "0\n";
+
+		System.setIn(new ByteArrayInputStream(entrada.getBytes()));
+		CadastroApplication.main(new String[]{});
+	}
+
+	@Test
+	void informaVagaInvalida() {
+
+		String entrada = 
+			"1\n" + "s\n" + "0\n";
+		System.setIn(new ByteArrayInputStream(entrada.getBytes()));
+		CadastroApplication.main(new String[]{});
+		
+ 	}
+
+	@Test 
+	void realizarCandidatura(){
+		String entrada = 
+			"1\n" + "1\n" + "João\n" + "20\n" + "Tenho interesse\n" + "0\n";
+		System.setIn(new ByteArrayInputStream(entrada.getBytes()));
+		CadastroApplication.main(new String[]{});
+	}
+
 }
