@@ -1,13 +1,20 @@
 package com.aep.cadastro;
 
 import org.junit.jupiter.api.Test;
-import org.springframework.boot.test.context.SpringBootTest;
 
-@SpringBootTest
+import java.io.ByteArrayInputStream;
+
 class CadastroApplicationTests {
 
-	@Test
-	void contextLoads() {
-	}
+    @Test
+    void deveEncerrarSistemaAoDigitarZero() {
 
+        String entrada = "0\n";
+
+        System.setIn(
+            new ByteArrayInputStream(entrada.getBytes())
+        );
+
+        CadastroApplication.main(new String[]{});
+    }
 }
