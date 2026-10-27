@@ -26,6 +26,19 @@ public class UserService {
     }
 
     public UserModel createUser(UserModel user){
+        if (user.getNome().isBlank()) {
+            throw new IllegalArgumentException("Nome é obrigatório");
+        }
+        if (user.getIdade() <= 0) {
+            throw new IllegalArgumentException("Idade deve ser maior que zero");
+        }
+        if (user.getVaga().isBlank()) {
+            throw new IllegalArgumentException("Vaga é obrigatoória");
+        }
+        if (user.getObservacao().isBlank()) {
+            throw new IllegalArgumentException("Descrião é obrigatória");
+        }
+
         return userRepository.save(user);
     }
 
@@ -33,6 +46,20 @@ public class UserService {
         UserModel user = userRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Usuário não encontrado: " + id));
         BeanUtils.copyProperties(userModel, user, "id");
+        if (userModel.getNome().isBlank()) {
+            throw new IllegalArgumentException("Nome é obrigatório");
+        }
+        if (userModel.getIdade() <= 0) {
+            throw new IllegalArgumentException("Idade deve ser maior que zero");
+        }
+        if (userModel.getVaga().isBlank()) {
+            throw new IllegalArgumentException("Vaga é obrigatória");
+        }
+        if (userModel.getObservacao().isBlank()) {
+            throw new IllegalArgumentException("Obsevação é obrigatória");
+        }
+        UserModel user = userRepository.findById(id).get();
+        BeanUtils.copyProperties(userModel, user);
         return userRepository.save(user);
     }
 
