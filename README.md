@@ -111,4 +111,7 @@ O código de cada entrega pode ser visto na aba Tags (ou Releases) do repositór
 
 O desenvolvimento foi organizado com um quadro de tarefas, apresentado na imagem abaixo.
 
+Link PipeFy: https://app.pipefy.com/public/form/QKn6QGmQ
+
+
 ![Quadro de tarefas](quadro-de-tarefas.png)
